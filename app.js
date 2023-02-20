@@ -3,15 +3,27 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const expressLayouts = require('express-ejs-layouts');
+var mongoose = require('mongoose');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// view engine setup jade
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'jade');
+
+//ejs layout
+app.use(expressLayouts);
+
+// ejs
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -37,5 +49,17 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+var db = mongoose.connection
+db.on('error', console.error);
+db.once('open', function(){
+    // CONNECTED TO MONGODB SERVER
+    console.log("Connected to mongod server");
+});
+mongoose.connect('mongodb://mongo:mongo@127.0.0.1:27017/mydb', {
+  useNewUrlParser: true, useUnifiedTopology: true
+});
+
+
 
 module.exports = app;
