@@ -56,7 +56,7 @@ db.once('open', function(){
     // CONNECTED TO MONGODB SERVER
     console.log("Connected to mongod server");
 });
-mongoose.connect('mongodb://mongo:mongo@127.0.0.1:27017/mydb', {
+mongoose.connect('mongodb://test_user:test_pass@127.0.0.1:27017/test_database', {
   useNewUrlParser: true, useUnifiedTopology: true
 });
 
