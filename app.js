@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var postRouter = require('./routes/post/post');
 
 var app = express();
 
@@ -19,7 +19,7 @@ var app = express();
 //ejs layout
 app.use(expressLayouts);
 
-// ejs
+//ejs
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
@@ -32,7 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/post', postRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -59,7 +59,6 @@ db.once('open', function(){
 mongoose.connect('mongodb://test_user:test_pass@127.0.0.1:27017/test_database', {
   useNewUrlParser: true, useUnifiedTopology: true
 });
-
 
 
 module.exports = app;

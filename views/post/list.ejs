@@ -1,0 +1,11 @@
+
+<h2>포스팅 리스트</h2>
+<button href="/post/create" > 작성하기 </button>
+
+<div>
+    <% for (var i = 0;i < data.length;i++){ %>
+        <li>
+            <h3> <%= data[i].title %> </h3>
+        </li>
+    <% } %>
+</div>
