@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const expressLayouts = require('express-ejs-layouts');
 var mongoose = require('mongoose');
-
+mongoose.Promise = global.Promise;
 
 var indexRouter = require('./routes/index');
 var postRouter = require('./routes/post/post');

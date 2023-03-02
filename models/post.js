@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
+const autoIncrement = require('mongoose-auto-increment');
 const { Schema } = mongoose;
+autoIncrement.initialize(mongoose.connection);
 
 const postSchema = new Schema({
+    id : {type: Number, default: 0},
     title: String,
     contents: String,
     publishedDate: Date,
@@ -11,20 +14,11 @@ const postSchema = new Schema({
     }
 });
 
-var Post = mongoose.model('Post', postSchema);
-
-postSchema.statics.save = function(data) {
-    Post.save(function (err, data) {
-        if (err) return handleError(err);
-        console.log( data )
-    })
-}
-
-postSchema.statics.find = async function(filter) {
-    return await Post.find(filter)(function (err, data) {
-        if (err) return handleError(err);
-        console.log( data )
-    })
-}
+postSchema.plugin(autoIncrement.plugin, {
+    model: 'postSchema',
+    field: 'id',
+    startAt: 1, //시작
+    increment: 1 // 증가
+});
 
 module.exports = mongoose.model('Post', postSchema);
